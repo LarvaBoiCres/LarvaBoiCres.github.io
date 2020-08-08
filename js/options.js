@@ -82,7 +82,7 @@ let engine = {
 let settings = {
 
 	// Initial Language for Multilanguage Games or for the Default GUI Language.
-	"Language": "Spanish",
+	"Language": "Español",
 
 	// Initial Volumes from 0.0 to 1.
 	"Volume": {

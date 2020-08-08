@@ -3,6 +3,9 @@
 
 let storage = {
 	player: {
-		name: ""
+		name: "",
+	},
+	rival: {
+		name: "",
 	}
 };

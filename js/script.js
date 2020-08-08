@@ -39,7 +39,7 @@ let particles = {
 
 // Define the music used in the game.
 const music = {
-
+	"welcome": "welcome.mp3",
 };
 
 // Define the voice files used in the game.
@@ -50,7 +50,10 @@ const voice = {
 
 // Define the sounds used in the game.
 const sound = {
-	
+	"bulbasaur": "bulbasaur.mp3",
+	"charmander": "charmander.mp3",
+	"squirtle": "squirtle.mp3",
+	"nidorino": "nidorino.mp3",
 };
 
 // Define the videos used in the game.
@@ -67,6 +70,7 @@ const images = {
 const scenes = {
 	"Good": "notrip.jpg",
 	"Bad": "trip.png",
+	"lab": "lab.png",
 };
 
 // Define the Characters
@@ -79,17 +83,208 @@ const characters = {
             "Normal": "akari.gif",
             "Mad": "abadon.png",
         },
-	}
+	},
+	"oak": {
+		"Name": "Profesor Oak",
+		"Color": "#5bcaff",
+		"Directory": "pokemon",
+		"Images": {
+            "normal": "oak.png",
+        },
+	},
+	"player": {
+		"Name": "{{player.name}}",
+		"Color": "#5bcaff",
+		"Directory": "pokemon",
+		"Images": {
+            "normal": "red.png",
+        },
+	},
+	"rival": {
+		"Name": "{{rival.name}}",
+		"Color": "#5bcaff",
+		"Directory": "pokemon",
+		"Images": {
+            "normal": "blue.png",
+        },
+	},
+	"bulbasaur": {
+		"Name": "Bulbasaur",
+		"Color": "#5bcaff",
+		"Directory": "pokemon",
+		"Images": {
+            "normal": "bulbasaur.jpg",
+        },
+	},
+	"charmander": {
+		"Name": "Charmander",
+		"Color": "#5bcaff",
+		"Directory": "pokemon",
+		"Images": {
+            "normal": "charmander.jpg",
+        },
+	},
+	"squirtle": {
+		"Name": "Squirtle",
+		"Color": "#5bcaff",
+		"Directory": "pokemon",
+		"Images": {
+            "normal": "squirtle.jpg",
+        },
+	},
+	"nidorino": {
+		"Name": "Nidorino",
+		"Color": "#5bcaff",
+		"Directory": "pokemon",
+		"Images": {
+            "normal": "nidorino.jpg",
+        },
+	},
 };
 
 
 let script = {
 	// The game starts here.
 	"Start": [
+		"scene lab with fadeIn",
+		"show oak normal right with fadeIn",
+		"play music welcome",
+		"oak ¡Hola! ¡Bienvenido al mundo de Pokémon! ¡Mi nombre es Oak!",
+		"oak ¡La gente me llama Profesor Pokémon!",
+		"show nidorino normal center",
+		"play sound nidorino",
+		"oak ¡Este mundo está habitado por criaturas llamadas Pokémon!",
+		"oak Para algunas personas, los pokémon son mascotas. Otros los usan para peleas.",
+		"oak En cuanto a mí, yo estudio a los pokémon como profesión.",
+		"hide nidorino",
+		"show player normal left",
+		"oak ¿Cuál es tu nombre?",
+	    {
+			"Input": {
+				"Text": "¿Cuál es tu nombre?",
+				"Validation": function(input) {
+				    return input.trim().length > 0;
+			    },
+			    "Save": function(input) {
+			        storage.player.name = input;
+			    },
+			    "Warning": "Escribe algo po, weón."
+            }
+        },
+		"oak ¡Aah! ¡Entonces tu nombre es {{player.name}}!",
+		"hide player",
+		"show rival normal left",
+		"oak Este es mi nieto. Ha sido tu rival desde que eras un bebé.",
+		"oak Ehh... ¿cuál era su nombre?",
+		{
+			"Input": {
+				"Text": "¿Cuál era su nombre?",
+				"Validation": function(input) {
+				    return input.trim().length > 0;
+			    },
+			    "Save": function(input) {
+			        storage.rival.name = input;
+			    },
+			    "Warning": "Escribe algo po, weón."
+            }
+        },
+		"oak ¡Ahora recuerdo! ¡Su nombre es {{rival.name}}!",
+		"hide rival",
+		"show player normal left",
+		"oak ¡{{player.name}}! ¡Tu propia aventura pokémon está a punto de comenzar!",
+		"oak Montón de sueños y aventuras con pokémon te esperan! ¡Vamos!",
+		"oak [2 MINUTOS MAS TARDE...]",
+		"jump choosePokemon",
+	],
+	"choosePokemon": [
+		"hide bulbasaur",
+		"hide charmander",
+		"hide squirtle",
+		"oak ¿Cuál pokémon quieres?",
+		{
+			"Choice": {
+				"bulbasaur": {
+					"Text": "Bulbasaur",
+					"Do": "jump chooseBulbasaur"
+				},
+				"charmander": {
+					"Text": "Charmander",
+					"Do": "jump chooseCharmander"
+				},
+				"squirtle": {
+					"Text": "Squirtle",
+					"Do": "jump chooseSquirtle"
+				},
+				"ninguno": {
+					"Text": "nimguno",
+					"Do": "jump chooseNone"
+				},
+			}
+		},
+	],
+	"chooseBulbasaur": [
+		"show bulbasaur normal center",
+		"play sound bulbasaur",
+		"oak ¿Quieres a Bulbasaur, el pokémon sapo culiao?",
+		{
+			"Choice": {
+				"Demás!": {
+					"Text": "Demás!",
+					"Do": "jump choose",
+				},
+				"Calmao...": {
+					"Text": "Calmao...",
+					"Do": "jump choosePokemon",
+				},
+			},
+		},
+	],
+	"chooseCharmander": [
+		"show charmander normal center",
+		"play sound charmander",
+		"oak ¿Quieres a Charmander, el pokémon largarto ctm?",
+		{
+			"Choice": {
+				"Demás!": {
+					"Text": "Demás!",
+					"Do": "jump choose",
+				},
+				"Calmao...": {
+					"Text": "Calmao...",
+					"Do": "jump choosePokemon",
+				},
+			},
+		},
+	],
+	"chooseSquirtle": [
+		"show squirtle normal center",
+		"play sound squirtle",
+		"oak ¿Quieres a Squirte, el pokémon tortuga de mierda?",
+		{
+			"Choice": {
+				"Demás!": {
+					"Text": "Demás!",
+					"Do": "jump choose",
+				},
+				"Calmao...": {
+					"Text": "Calmao...",
+					"Do": "jump choosePokemon",
+				},
+			},
+		},
+	],
+	"choose": [
+		"oak Perkin.",
+	],
+	"chooseNone": [
+		"stop music",
+		"oak Si querí no más.",
+	],
+	"unused": [
 		// "notify Welcome",
 		"scene Good",
 		"show h Normal middle",
-		"play voice No",
+		// "play voice No",
 		{
 			"Choice": {
 				"Dialog": "h Págueme la renta.",
@@ -107,7 +302,7 @@ let script = {
 
 	"Yes": [
 		"scene Bad",
-		"play voice Yes",
+		// "play voice Yes",
 		"show h Mad with fadeIn",
 		"h Nadie se va sin pagarme la renta!",
 		"end"
